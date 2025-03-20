@@ -1,0 +1,12 @@
+<div class="container mx-auto py-8 px-4">
+    <h1 class="text-3xl font-semibold text-gray-800">Projects</h1>
+    <div id="project-list" class="mt-4">
+        <button
+            hx-get="projects.json"
+            hx-target="#project-list"
+            hx-trigger="click"
+        >
+            Load Projects
+        </button>
+    </div>
+</div>

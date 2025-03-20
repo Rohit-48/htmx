@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Rohit - Portfolio</title>
+
+        <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+        <link
+            href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.5/dist/tailwind.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body class="bg-gray-100 text-gray-900">
+        <header class="bg-white shadow-md py-4">
+            <div
+                class="container mx-auto flex justify-between items-center px-4"
+            >
+                <h1 class="text-2xl font-bold">Rohit</h1>
+                <nav class="space-x-4">
+                    <a
+                        href="#"
+                        hx-get="about.html"
+                        hx-target="#content"
+                        class="nav-link"
+                        >About</a
+                    >
+                    <a
+                        href="#"
+                        hx-get="projects.html"
+                        hx-target="#content"
+                        class="nav-link"
+                        >Projects</a
+                    >
+                    <a
+                        href="#"
+                        hx-get="notes.html"
+                        hx-target="#content"
+                        class="nav-link"
+                        >Notes</a
+                    >
+                    <a
+                        href="#"
+                        hx-get="blog.html"
+                        hx-target="#content"
+                        class="nav-link"
+                        >Blog</a
+                    >
+                    <a
+                        href="#"
+                        hx-get="social.html"
+                        hx-target="#content"
+                        class="nav-link"
+                        >Social</a
+                    >
+                </nav>
+                <button id="dark-mode-toggle" class="p-2 border rounded">
+                    Toggle Dark Mode
+                </button>
+            </div>
+        </header>
+
+        <main id="content" class="container mx-auto p-6">
+            <h2 class="text-3xl font-semibold">Welcome to My Portfolio</h2>
+            <p class="mt-2 text-gray-700">Click the links above to explore.</p>
+        </main>
+
+        <footer class="bg-gray-200 py-4 mt-12 text-center">
+            <p>&copy; 2024 Rohit. All rights reserved.</p>
+        </footer>
+
+        <script src="script.js"></script>
+    </body>
+</html>
