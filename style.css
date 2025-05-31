@@ -1,9 +1,46 @@
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    /* Tailwind's bg-gray-100 and text-gray-900 are already on the body in index.html */
+}
+
+a {
+    /* Adding a general transition for link color changes */
+    transition: color 0.15s ease-in-out;
+    /* Specific link colors should be applied via Tailwind classes like text-indigo-600 etc. */
+}
+
+/*
+  Basic focus visible state as a fallback.
+  Tailwind's focus:ring utilities are preferred for more control on individual elements.
+*/
+*:focus-visible {
+    outline: 2px solid #2563eb; /* Blue-600 */
+    outline-offset: 2px;
+}
+
 .htmx-swapping {
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
 
+/* Styles for active navigation links */
+.nav-link.active-link {
+    font-weight: bold;
+    /* Example color - choose one that fits your theme */
+    color: #3b82f6; /* A blue color, similar to text-blue-600 */
+}
+
+/* Dark mode styling for active navigation links */
+.dark .nav-link.active-link {
+    /* Example dark mode color - choose one that fits your theme */
+    color: #60a5fa; /* A lighter blue for dark backgrounds */
+}
+
+/*
+  The .dark class on html or body is now primarily for Tailwind's dark: variants.
+  Specific global overrides can go here if needed, but prefer Tailwind utilities.
+*/
 .dark {
-    background-color: #1a202c;
-    color: #f7fafc;
+    /* background-color: #1a202c; -- Handled by Tailwind dark:bg-gray-XXX utilities */
+    /* color: #f7fafc;          -- Handled by Tailwind dark:text-gray-XXX utilities */
 }

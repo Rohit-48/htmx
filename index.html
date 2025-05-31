@@ -61,9 +61,22 @@
             </div>
         </header>
 
-        <main id="content" class="container mx-auto p-6">
-            <h2 class="text-3xl font-semibold">Welcome to My Portfolio</h2>
-            <p class="mt-2 text-gray-700">Click the links above to explore.</p>
+        <!-- HTMX Loading Indicator -->
+        <div id="htmx-loading-indicator" class="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center z-50" style="display: none;">
+            <div class="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-xl">
+                <p class="text-gray-900 dark:text-white font-semibold">Loading...</p>
+            </div>
+        </div>
+
+        <!-- HTMX Global Error Messages -->
+        <div id="htmx-error-container" class="fixed bottom-0 right-0 mb-4 mr-4 p-4 bg-red-500 text-white rounded-lg shadow-xl z-50" style="display: none;">
+            <p id="htmx-error-message"></p>
+            <button onclick="document.getElementById('htmx-error-container').style.display='none'" class="ml-2 text-sm underline">Dismiss</button>
+        </div>
+
+        <main id="content" class="container mx-auto py-8 px-4">
+            <h2 class="text-3xl font-semibold">Welcome to My Digital Space</h2>
+            <p class="mt-2 text-gray-700">Explore my projects, writings, and journey in the world of software development. Use the navigation above to discover more.</p>
         </main>
 
         <footer class="bg-gray-200 py-4 mt-12 text-center">

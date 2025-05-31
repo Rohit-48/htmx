@@ -1,7 +1,20 @@
 [
-  { "title": "Intro to HTMX", "desc": "A beginner-friendly guide to HTMX." },
   {
-    "title": "Building a Portfolio",
-    "desc": "How I built my portfolio with HTMX."
+    "title": "Intro to HTMX",
+    "desc": "A beginner-friendly guide to HTMX.",
+    "date": "2024-03-15",
+    "content_preview": "HTMX is a library that allows you to access modern browser features directly from HTML, rather than using javascript. This post explores the basics..."
+  },
+  {
+    "title": "Building a Portfolio with Modern Tools",
+    "desc": "How I built my portfolio with HTMX and Tailwind CSS.",
+    "date": "2024-04-05",
+    "content_preview": "Discover the process of creating a fast, modern portfolio website using the power of HTMX for dynamic content and Tailwind CSS for styling..."
+  },
+  {
+    "title": "Understanding Asynchronous JavaScript",
+    "desc": "A deep dive into async/await, Promises, and callbacks.",
+    "date": "2024-02-20",
+    "content_preview": "Asynchronous operations are fundamental in JavaScript for non-blocking tasks. This article breaks down common patterns like Promises and async/await..."
   }
 ]
