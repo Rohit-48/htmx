@@ -1,4 +1,23 @@
 [
-  { "title": "Gym Manager", "desc": "A Rust-based gym management system." },
-  { "title": "Portfolio", "desc": "This portfolio built with HTMX." }
+  {
+    "title": "Gym Manager",
+    "desc": "A Rust-based gym management system for tracking members, schedules, and billing. Features a CLI for admin tasks and a web interface for members.",
+    "technologies_used": ["Rust", "Actix-web", "Diesel", "PostgreSQL", "HTML", "CSS"],
+    "repo_link": "https://github.com/Rohit-48/gym-manager-example",
+    "live_demo_link": ""
+  },
+  {
+    "title": "Portfolio Website",
+    "desc": "This personal portfolio, built to showcase my projects and skills. Features dynamic content loading with HTMX and styling with Tailwind CSS.",
+    "technologies_used": ["HTML", "CSS", "JavaScript", "HTMX", "Tailwind CSS"],
+    "repo_link": "https://github.com/Rohit-48/portfolio-htmx-tailwind",
+    "live_demo_link": "https://rohit-48.github.io/portfolio"
+  },
+  {
+    "title": "E-commerce Analytics Dashboard",
+    "desc": "A web application for visualizing sales data and customer behavior for an e-commerce platform. Built with React and Chart.js.",
+    "technologies_used": ["React", "Chart.js", "Node.js", "Express", "MongoDB"],
+    "repo_link": "https://github.com/Rohit-48/ecommerce-dashboard-example",
+    "live_demo_link": "https://rohit-48.github.io/ecommerce-dashboard"
+  }
 ]

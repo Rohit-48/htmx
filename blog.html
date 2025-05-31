@@ -1,8 +1,72 @@
 <div class="container mx-auto py-8 px-4">
-    <h1 class="text-3xl font-semibold text-gray-800">Blog</h1>
-    <div id="blog-list" class="mt-4">
-        <button hx-get="blog.json" hx-target="#blog-list" hx-trigger="click">
-            Load Blogs
-        </button>
+    <h1 class="text-3xl font-semibold text-gray-800 dark:text-white mb-6">My Blog</h1>
+    <div id="blog-list-container" class="space-y-6">
+        <!-- Blog posts will be loaded here by script -->
     </div>
 </div>
+
+<script>
+function displayBlogPosts() {
+    fetch('blog.json')
+        .then(response => response.json())
+        .then(posts => {
+            const container = document.getElementById('blog-list-container');
+            if (!container) return;
+            container.innerHTML = ''; // Clear existing content
+
+            if (posts.length === 0) {
+                container.innerHTML = '<p class="text-gray-600 dark:text-gray-400">No blog posts available at the moment. Check back soon!</p>';
+                return;
+            }
+
+            // Optional: Sort posts by date, newest first
+            posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            posts.forEach(post => {
+                const article = document.createElement('article');
+                article.className = 'bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 transform transition-all hover:shadow-xl';
+
+                article.innerHTML = \`
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                        <a href="#" class="hover:underline">${post.title}</a> <!-- Placeholder link -->
+                    </h2>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Published on: ${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    <p class="text-gray-700 dark:text-gray-300 mb-4">${post.content_preview}</p>
+                    <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline font-semibold">Read more...</a> <!-- Placeholder link -->
+                \`;
+                container.appendChild(article);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching blog posts:', error);
+            const container = document.getElementById('blog-list-container');
+            if (container) {
+                container.innerHTML = '<p class="text-red-500">Could not load blog posts. Please try again later.</p>';
+            }
+        });
+}
+
+// Ensure this script runs when blog.html is loaded into the DOM by HTMX.
+// If the script tag is part of the content swapped by HTMX, it will be executed.
+function initBlog() {
+    if (document.getElementById('blog-list-container')) {
+        displayBlogPosts();
+    }
+}
+
+// Check if HTMX is loaded and use htmx.onLoad for robustness
+if (window.htmx) {
+    htmx.onLoad(function(target) {
+        // Check if the loaded content contains our blog list container or is the container itself
+        if (target.querySelector('#blog-list-container') || target.id === 'blog-list-container') {
+             displayBlogPosts();
+        }
+    });
+    // Initial call in case it's not an HTMX load or for fallback
+    // This helps if the page is loaded directly or if htmx.onLoad doesn't fire for the initial content.
+    initBlog();
+} else {
+    // Fallback for when HTMX is not present
+    initBlog();
+}
+</script>

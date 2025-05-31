@@ -1,12 +1,112 @@
 <div class="container mx-auto py-8 px-4">
-    <h1 class="text-3xl font-semibold text-gray-800">Projects</h1>
-    <div id="project-list" class="mt-4">
-        <button
-            hx-get="projects.json"
-            hx-target="#project-list"
-            hx-trigger="click"
-        >
-            Load Projects
-        </button>
+    <h1 class="text-3xl font-semibold text-gray-800 dark:text-white mb-6">My Projects</h1>
+    <div id="project-list-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Projects will be loaded here by script -->
     </div>
 </div>
+
+<script>
+function displayProjects() {
+    fetch('project.json')
+        .then(response => response.json())
+        .then(projects => {
+            const container = document.getElementById('project-list-container');
+            if (!container) return;
+            container.innerHTML = ''; // Clear existing content
+
+            if (projects.length === 0) {
+                container.innerHTML = '<p class="text-gray-600 dark:text-gray-400">No projects to display at the moment. Check back soon!</p>';
+                return;
+            }
+
+            projects.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden transform transition-all hover:scale-105';
+
+                let linksHTML = '';
+                if (project.repo_link) {
+                    linksHTML += `<a href="${project.repo_link}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 dark:text-indigo-400 hover:underline mr-3">View Repo</a>`;
+                }
+                if (project.live_demo_link) {
+                    linksHTML += `<a href="${project.live_demo_link}" target="_blank" rel="noopener noreferrer" class="text-green-600 dark:text-green-400 hover:underline">Live Demo</a>`;
+                }
+
+                let techHTML = '';
+                if (project.technologies_used && project.technologies_used.length > 0) {
+                    techHTML = project.technologies_used.map(tech =>
+                        `<span class="inline-block bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 dark:text-gray-200 mr-2 mb-2">${tech}</span>`
+                    ).join('');
+                }
+
+                card.innerHTML = \`
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">${project.title}</h3>
+                        <p class="text-gray-700 dark:text-gray-300 text-sm mb-4">${project.desc}</p>
+                        <div class="mb-4">
+                            ${techHTML}
+                        </div>
+                        <div class="mt-auto">
+                            ${linksHTML}
+                        </div>
+                    </div>
+                \`;
+                container.appendChild(card);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching projects:', error);
+            const container = document.getElementById('project-list-container');
+            if (container) {
+                container.innerHTML = '<p class="text-red-500">Could not load projects. Please try again later.</p>';
+            }
+        });
+}
+
+// Ensure this script runs when project.html is loaded into the DOM by HTMX.
+// If project.html is loaded into #content, this script will execute.
+// We can also trigger it via an htmx:afterSwap event if this <script> tag itself isn't re-evaluated.
+// For simplicity, this inline script will run when project.html is parsed.
+// To be more robust with HTMX, this function should be defined globally (e.g. in script.js)
+// and then project.html could have <div hx-init="displayProjects()"> or similar.
+// For now, let's keep it simple and assume this script in project.html runs.
+if (document.getElementById('project-list-container')) {
+    displayProjects();
+} else {
+    // If loaded via HTMX, the element might not be there immediately.
+    // A more robust way is to listen for htmx:load for this specific target.
+    // However, the script tag should execute when the content is swapped in.
+    // Adding a slight delay or using MutationObserver if issues persist.
+    // For now, this should work for typical HTMX swaps.
+    // A common pattern for HTMX is to ensure scripts are re-evaluated or functions are globally available.
+    // An alternative for HTMX if scripts are not re-run reliably:
+    // document.body.addEventListener('htmx:load', function(evt) {
+    //   if (evt.detail.elt.id === 'project-list-container' || evt.detail.path === 'project.html') {
+    //     displayProjects();
+    //   }
+    // });
+    // For now, relying on the script block execution upon insertion.
+    // A more direct HTMX way if the script block is evaluated:
+    // Check if the script is running because project.html was loaded into #content
+    // This check might be too simplistic if other conditions also lead to this script running.
+    // A specific hx-trigger="load" or hx-init on the container itself calling a global function is often best.
+    // Given the current setup, we'll assume the script tag executes.
+    // If the script is part of the content swapped by HTMX, it should execute.
+    // Let's ensure it gets called if the container is present.
+    // A simple way to ensure it runs after HTMX swap for this specific content:
+    if (window.htmx) { //check if htmx is available
+        htmx.onLoad(function(target) {
+            // Check if the loaded content contains our project list container
+            if (target.querySelector('#project-list-container') || target.id === 'project-list-container') {
+                 displayProjects();
+            }
+        });
+        // Initial call in case it's not an HTMX load or for fallback
+        if(document.getElementById('project-list-container')){
+            displayProjects();
+        }
+    } else if (document.getElementById('project-list-container')) {
+        // Fallback if HTMX is not loaded or not involved in this specific load
+         displayProjects();
+    }
+}
+</script>
